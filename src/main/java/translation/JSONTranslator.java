@@ -49,7 +49,8 @@ public class JSONTranslator implements Translator {
                 JSONObject countryData = jsonArray.getJSONObject(i);
                 String countryCode = countryData.getString("alpha3");
 
-                List<String> languages = new ArrayList<>();
+
+                this.countryCodes.add(countryCode);
 
                 // TODO Task C: record this countryCode in the correct instance variable
 
@@ -58,12 +59,13 @@ public class JSONTranslator implements Translator {
                     if (!key.equals("id") && !key.equals("alpha2") && !key.equals("alpha3")) {
                         String languageCode = key;
                         // TODO Task C: record this translation in the appropriate instance variable
-
-                        if (!languages.contains(languageCode)) {
-                            languages.add(languageCode);
+                        this.translations.put(countryCode + "-" + languageCode, countryData.getString(key));
+                        if (!this.languageCodes.contains(languageCode)) {
+                            this.languageCodes.add(languageCode);
                         }
                     }
                 }
+
             }
         }
         catch (IOException | URISyntaxException ex) {
@@ -74,7 +76,7 @@ public class JSONTranslator implements Translator {
     @Override
     public List<String> getLanguageCodes() {
         // TODO Task C: return a copy of the language codes
-        return new ArrayList<>();
+        return this.languageCodes;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class JSONTranslator implements Translator {
 
     @Override
     public String translate(String countryCode, String languageCode) {
+        return translations.get(countryCode + "-" + languageCode);
         // TODO Task C: complete this method using your instance variables as needed
-        return "JSONTranslator's translate method is not implemented!";
     }
 }
